@@ -4,6 +4,8 @@ library(lubridate)
 library(fpp3)
 
 
+
+# meget vigtig ædnring 
 data_one_min <- read_csv("data_one_min.csv")
 
 data_one_min <- data_one_min %>% 
