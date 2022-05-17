@@ -8,6 +8,8 @@ library(fpp3)
 # meget vigtig ædnring 
 data_one_min <- read_csv("data_one_min.csv")
 
+
+#En ændring mere
 data_one_min <- data_one_min %>% 
   select(-day) %>% 
   as_tsibble()
