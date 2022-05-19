@@ -15,3 +15,27 @@ test <- test %>%
 
 test %>% autoplot(rainfall_mm)+
   geom_line(aes(y=test_rain,col="RED"))
+
+
+
+#Loading packages
+library(tidyverse) 
+library(lubridate)
+library(fpp3)
+
+
+test<- test %>% 
+  select(-day) %>% 
+  mutate(time_hour=ymd_hms(time_hour)) %>% 
+  as_tsibble(index=time_hour)
+
+
+
+test %>% 
+  filter_index("2020-04-01") %>% 
+  autoplot(flow_effluent_m3_h) +
+  geom_line(aes(y=flow_influent_m3_h),col="Red", alpha=0.5)
+
+
+
+

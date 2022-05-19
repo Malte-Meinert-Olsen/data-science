@@ -62,7 +62,7 @@ load_and_preprocess_dataframe <- function(path){
   #converting all the data columns to charters, to prevent R form 
   #automatically converting the columns to numbers, which gives problems 
   #with commas and dots
-  df <- read_delim(here::here("Data",path), 
+  df <- read_delim(here::here("raw_data",path), 
                    delim=";",
                    col_types = cols(.default = "c"))
   
@@ -316,32 +316,45 @@ print_NA <- function(column_name){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
-sum_over_rain_data <- function(df,time_column){
+#Defining the function
+sum_over_rain_data <- function(df, rain_column_name, time_intervals_pr_day){
+  
   df <- df %>%
-    mutate(day = as.Date({{time_column}}))%>%
-    mutate(rain_one_day_accumulated = map_dbl(day,
-                                              ~sum(rainfall_mm[(day > . - 1) & 
-                                                                 (day < .)])))%>%
-    mutate(rain_two_day_accumulated = map_dbl(day,
-                                              ~sum(rainfall_mm[(day > . - 2) & 
-                                                                 (day < .)])))%>%
-    mutate(rain_three_day_accumulated = map_dbl(day,
-                                                ~sum(rainfall_mm[(day > . - 3) & 
-                                                                   (day < .)])))%>%
-    mutate(rain_four_day_accumulated = map_dbl(day,
-                                               ~sum(rainfall_mm[(day > . - 4) & 
-                                                                  (day < .)])))%>%
-    mutate(rain_five_day_accumulated = map_dbl(day,
-                                               ~sum(rainfall_mm[(day > . - 5) & 
-                                                                  (day < .)])))%>%
-    mutate(rain_six_day_accumulated = map_dbl(day,
-                                              ~sum(rainfall_mm[(day > . - 6) & 
-                                                                 (day < .)]))) %>%
-    mutate(rain_seven_day_accumulated = map_dbl(day,
-                                                ~sum(rainfall_mm[(day > . - 7) & 
-                                                                   (day < .)])))
+    #Creating a column with accumulated rain for one day with the rollappplyr function
+    mutate(rain_one_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                 width=1*time_intervals_pr_day, 
+                                                 FUN=sum, 
+                                                 partial=T))%>%
+    #Creating a column with accumulated rain for two day with the rollappplyr function
+    mutate(rain_two_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                 width=2*time_intervals_pr_day, 
+                                                 FUN=sum, 
+                                                 partial=T))%>%
+    #Creating a column with accumulated rain for three day with the rollappplyr function
+    mutate(rain_three_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                   width=3*time_intervals_pr_day, 
+                                                   FUN=sum, 
+                                                   partial=T))%>%
+    #Creating a column with accumulated rain for four day with the rollappplyr function
+    mutate(rain_four_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                  width=4*time_intervals_pr_day, 
+                                                  FUN=sum, 
+                                                  partial=T))%>%
+    #Creating a column with accumulated rain for five day with the rollappplyr function
+    mutate(rain_five_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                  width=5*time_intervals_pr_day, 
+                                                  FUN=sum, 
+                                                  partial=T))%>%
+    #Creating a column with accumulated rain for six day with the rollappplyr function
+    mutate(rain_six_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                  width=6*time_intervals_pr_day, 
+                                                  FUN=sum, 
+                                                  partial=T)) %>%
+    #Creating a column with accumulated rain for seven day with the rollappplyr function
+    mutate(rain_seven_day_accumulated = rollapplyr({{rain_column_name}}, 
+                                                  width=7*time_intervals_pr_day, 
+                                                  FUN=sum, 
+                                                  partial=T))
 }
-
-
 
 
