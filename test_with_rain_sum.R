@@ -1,13 +1,11 @@
 test <- read.csv("data/data_hour.csv")
 
 
-test <- test %>% 
-  select(time_hour,rainfall_mm)
+test <- data_hour %>% 
+  select(time_hour,rainfall_mm, flow_effluent_m3_h)
 
 
 test <- test %>% 
-  mutate(time_hour=ymd_hms(time_hour)) %>% 
-  as_tsibble() %>% 
   filter_index("2020-02")
 test <- test %>% 
   mutate(test_rain=rollapplyr(rainfall_mm, width=1*24, FUN=sum, partial=T))
@@ -32,10 +30,18 @@ test<- test %>%
 
 
 test %>% 
-  filter_index("2020-04-01") %>% 
   autoplot(flow_effluent_m3_h) +
-  geom_line(aes(y=flow_influent_m3_h),col="Red", alpha=0.5)
+  geom_line(aes(y=rainfall_mm),col="Red", alpha=0.5)
 
 
+
+
+test_fcm <- function(df,av=0.5){
+  df %>% 
+    autoplot(flow_effluent_m3_h)+
+    geom_line(aes(rainfall_mm), col="Red", alpha=av)
+}
+
+test %>% test_fcm()
 
 

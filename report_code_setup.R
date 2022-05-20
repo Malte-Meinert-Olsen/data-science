@@ -31,5 +31,7 @@ data_thirty_min <- read_csv("data/data_thirty_min.csv") %>%
 
 data_hour <- read_csv("data/data_hour.csv") %>% 
   mutate(time_hour=ymd_hms(time_hour)) %>% 
-  as_tsibble()
+  as_tsibble() %>% 
+  mutate(flow_effluent_m3_h=na.approx(flow_effluent_m3_h)) %>% 
+  mutate(ammonium_effluent_mg_L=na.approx(ammonium_effluent_mg_L))
 
