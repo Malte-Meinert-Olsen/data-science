@@ -10,6 +10,7 @@
 library(tidyverse) 
 library(lubridate)
 library(fpp3)
+library(zoo)
 #Making the lubridate package run faster
 options(lubridate.fasttime = TRUE)
 
@@ -25,7 +26,7 @@ source("report_code_function_for_data_merging_and_cleaning.R")
 #-------------------------------------------------------------------------------
 
 #Defining the first month in the list of month manually 
-data_one_min <- load_and_preprocess_dataframe("raw_data/Malte_apr2018.csv")
+data_one_min <- load_and_preprocess_dataframe("Malte_apr2018.csv") 
 
 #Defining the counter
 i=0
@@ -33,7 +34,7 @@ i=0
 #Merging all the csv file in one data frame and preprocess the csv files
 for(file in list_of_filenames){
   #Loading and pre-processing the data
-  df1 <- load_and_preprocess_dataframe(file)
+  df1 <- load_and_preprocess_dataframe(file) 
   
   #Skip the first manually assigned file 
   if (i>0) {
@@ -343,7 +344,7 @@ data_DMI_drought <- data_DMI_drought %>%
 #Adding the drought data to the data frame
 data_one_min <- data_one_min %>% 
   #Creating a column with time in a day formate
-  mutate(day=as.Date(time_one_min,"day")) %>% 
+  mutate(day=as.Date(time_one_min)) %>% 
   #Joining drought index to the data frame
   left_join(data_DMI_drought) %>% 
   #Removing the day time column 
@@ -352,63 +353,9 @@ data_one_min <- data_one_min %>%
 
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-#Summing and saving the one minute data frame
+#Saving the one minute data frame
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-
-#-------------------------------------------
-#-------------------------------------------
-#Sum over 1 to 7 days
-#-------------------------------------------
-#-------------------------------------------
-
-#Converting the data frame to a tsibble
-data_one_min <- data_one_min %>% 
-  as_tsibble()
-
-#Saving the data frame as a temp data frame, for reference
-temp <- data_one_min
-
-#Finding the system time
-t0 <- Sys.time()
-
-#Resetting the counter
-i=0
-
-#Splitting the data frame into month, enable the PC to work with the data, without 
-#crashing do to lost working memory
-data_one_min <- temp %>% 
-  #Selecting the first month with data measured 
-  filter_index("2018-01") %>%
-  #Applying the summing function (1440 is minutes pr. day)
-  sum_over_rain_data(rainfall_mm, 
-                     1440)
-
-#Splitting the data frame into months and preform the rain summation
-for(months in months_meausred){
-  
-  df1 <- temp %>% 
-    #Spilt the data into all the months in the list of months
-    filter_index(months)%>%
-    #Apply the summing function (1440 is minutes pr. day)
-    sum_over_rain_data(rainfall_mm, 
-                       1440)
-  
-  #Bind all the data frame together in one data frame again
-  data_one_min <- bind_rows(df1, 
-                            data_one_min)
-  
-  #Add one to the counter
-  i=i+1
-  
-  #Print the counter to follow the process of the code
-  print(i)
-  
-}
-
-#Reporting the code run time
-end <- Sys.time() - t0
-print(end)
 
 #Removing duplicates based on time values, by keeping the first 
 #observation and removing the rest
@@ -449,14 +396,6 @@ write_csv(data_one_min,
 
 #Turn the data_one_min to a tsibble
 data_one_min <- data_one_min %>%
-  #Removing the accumulated rain columns
-  select(-rain_one_day_accumulated, 
-         -rain_two_day_accumulated, 
-         -rain_three_day_accumulated, 
-         -rain_four_day_accumulated,
-         -rain_five_day_accumulated, 
-         -rain_six_day_accumulated, 
-         -rain_seven_day_accumulated) %>% 
   #Converting to a tsibble
   as_tsibble(index=time_one_min)
 
