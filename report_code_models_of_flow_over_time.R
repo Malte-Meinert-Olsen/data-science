@@ -16,8 +16,9 @@ fit_report <- function(df){
   df %>% report()
 
   df %>% 
-    glance() %>%
-    select(adj_r_squared, AIC, BIC)
+    glance() %>% 
+    select(AIC,BIC)
+  
 }
 
 
@@ -337,19 +338,211 @@ TSLM_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7 %>%
 
 
 
+#----------------------------------
+#TSLM_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3
+#----------------------------------
+TSLM_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 <- training_data %>% 
+  mutate(DIxR1=rain_one_day_accumulated*drought) %>% 
+  model(
+    TSLM(flow_effluent_m3_h~ rainfall_mm+
+            lag(rainfall_mm,n=1L)+
+            lag(rainfall_mm,n=2L)+
+            lag(rainfall_mm,n=3L)+
+            rain_one_day_accumulated+
+            rain_two_day_accumulated+
+            rain_three_day_accumulated+
+            rain_four_day_accumulated+
+            rain_five_day_accumulated+
+            rain_six_day_accumulated+
+            rain_seven_day_accumulated+
+            DIxR1+
+            drought+
+            fourier(period = "day", K = 7) +
+            fourier(period = "week", K = 5) +
+            fourier(period = "year", K = 3))
+  )
+
+TSLM_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  fit_report() 
+
+TSLM_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  saveRDS("models/TSLM_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3.rds")
 
 
-#
+#-------------------------------------------------------------------------------
+#Linear model with ARIMA errors using the ARIMA function
+#-------------------------------------------------------------------------------
+
+
+#----------------------------------
+#ARIMA(d=0)
+#----------------------------------
+ARIMA_d_0 <- training_data %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h ~ PDQ(0, 0, 0) + pdq(d = 0))
+  )
+
+
+
+ARIMA_d_0 %>% 
+  fit_report() 
+
+ARIMA_d_0 %>% 
+  saveRDS("models/ARIMA_d_0.rds")
+
+
+#----------------------------------
+#ARIMA(d=1)
+#----------------------------------
+ARIMA_d_1 <- training_data %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h ~ PDQ(0, 0, 0) + pdq(d = 1))
+  )
+
+
+
+ARIMA_d_1 %>% 
+  fit_report() 
+
+ARIMA_d_1 %>% 
+  saveRDS("models/ARIMA_d_1.rds")
+
+
+#----------------------------------
+#ARIMA(d=2)
+#----------------------------------
+ARIMA_d_2 <- training_data %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h ~ PDQ(0, 0, 0) + pdq(d = 2))
+  )
+
+
+
+ARIMA_d_2 %>% 
+  fit_report() 
+
+ARIMA_d_2 %>% 
+  saveRDS("models/ARIMA_d_2.rds")
+
+
+#----------------------------------
+#ARIMA_d_0_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3
+#----------------------------------
+ARIMA_d_0_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 <- training_data %>% 
+  mutate(DIxR1=rain_one_day_accumulated*drought) %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h~ pdq(d=0)+PDQ(0, 0, 0)+lag(rainfall_mm,n=1L)+
+           lag(rainfall_mm,n=2L)+
+           lag(rainfall_mm,n=3L)+
+           rain_one_day_accumulated+
+           rain_seven_day_accumulated+
+           DIxR1+
+           drought+
+           fourier(period = "day", K = 7) +
+           fourier(period = "week", K = 5) +
+           fourier(period = "year", K = 3))
+  )
+
+ARIMA_d_0_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  fit_report() 
+
+ARIMA_d_0_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  saveRDS("models/ARIMA_d_0_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3.rds")
 
 
 
 
+#----------------------------------
+#ARIMA_d_1_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3
+#----------------------------------
+ARIMA_d_1_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 <- training_data %>% 
+  mutate(DIxR1=rain_one_day_accumulated*drought) %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h~ pdq(d=1)+PDQ(0, 0, 0)+lag(rainfall_mm,n=1L)+
+            lag(rainfall_mm,n=2L)+
+            lag(rainfall_mm,n=3L)+
+            rain_one_day_accumulated+
+            rain_seven_day_accumulated+
+            DIxR1+
+            drought+
+            fourier(period = "day", K = 7) +
+            fourier(period = "week", K = 5) +
+            fourier(period = "year", K = 3))
+  )
+
+ARIMA_d_1_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  fit_report() 
+
+ARIMA_d_1_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  saveRDS("models/ARIMA_d_1_lag1R_lag2R_lag3R_R1_R7_DIxR1_DI_FDK7_FWK5_FYK3.rds")
 
 
+#----------------------------------
+#ARIMA_d_0_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3
+#----------------------------------
+ARIMA_d_0_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 <- training_data %>% 
+  mutate(DIxR1=rain_one_day_accumulated*drought) %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h~ pdq(d=0)+PDQ(0, 0, 0)+rainfall_mm+
+            lag(rainfall_mm,n=1L)+
+            lag(rainfall_mm,n=2L)+
+            lag(rainfall_mm,n=3L)+
+            rain_one_day_accumulated+
+            rain_two_day_accumulated+
+            rain_three_day_accumulated+
+            rain_four_day_accumulated+
+            rain_five_day_accumulated+
+            rain_six_day_accumulated+
+            rain_seven_day_accumulated+
+            DIxR1+
+            drought+
+            fourier(period = "day", K = 7) +
+            fourier(period = "week", K = 5) +
+            fourier(period = "year", K = 3))
+  )
 
+ARIMA_d_0_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  fit_report() 
 
+ARIMA_d_0_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  saveRDS("models/ARIMA_d_0_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3.rds")
 
+#----------------------------------
+#ARIMA_d_1_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3
+#----------------------------------
+ARIMA_d_1_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 <- training_data %>% 
+  mutate(DIxR1=rain_one_day_accumulated*drought) %>% 
+  fill_gaps() %>% 
+  model(
+    ARIMA(flow_effluent_m3_h~ pdq(d=1)+PDQ(0, 0, 0)+rainfall_mm+
+            lag(rainfall_mm,n=1L)+
+            lag(rainfall_mm,n=2L)+
+            lag(rainfall_mm,n=3L)+
+            rain_one_day_accumulated+
+            rain_two_day_accumulated+
+            rain_three_day_accumulated+
+            rain_four_day_accumulated+
+            rain_five_day_accumulated+
+            rain_six_day_accumulated+
+            rain_seven_day_accumulated+
+            DIxR1+
+            drought+
+            fourier(period = "day", K = 7) +
+            fourier(period = "week", K = 5) +
+            fourier(period = "year", K = 3))
+  )
 
+ARIMA_d_1_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  fit_report() 
+
+ARIMA_d_1_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3 %>% 
+  saveRDS("models/ARIMA_d_1_R_lag1R_lag2R_lag3R_R1_R2_R3_R4_R5_R6_R7_DIxR1_DI_FDK7_FWK5_FYK3.rds")
 
 
 
