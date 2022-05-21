@@ -32,7 +32,7 @@ extra_data_drought <- extra_data_drought %>%
   rename(day=DateTime, 
          drought_new="TI") %>% 
   #Converting the time column to the correct format
-  mutate(day=as.Date(day)) %>% 
+  mutate(day=dmy(day)) %>% 
   #Replacing comma with dot and converting to numeric
   mutate(drought_new= as.numeric(gsub(",", ".",  as.character(drought_new)))) %>% 
   as_tsibble()

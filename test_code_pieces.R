@@ -114,3 +114,14 @@ my_model <- readRDS("test_fit.rds")
 test %>% autoplot(flow_effluent_m3_h) +
   geom_line(aes(y = .fitted), col="Red",
             data = augment(my_model))
+
+
+if(as.Date(data_hour$time_hour)=="2020-01-01"){
+  test <- test %>% 
+    mutate(drought=10000)
+}
+
+test <- test %>% 
+  mutate(day=as.Date(time_hour))
+
+test$drought[test$day=="2020-01-01"] <- 1000
