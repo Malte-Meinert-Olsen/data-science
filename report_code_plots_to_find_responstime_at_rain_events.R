@@ -69,11 +69,6 @@ gridExtra::grid.arrange(data_one_min %>%
                           filter_index("2018-07-28 20:00"~"2018-07-29 20:00") %>%
                           ggplot(aes(time_one_min)) + 
                           geom_line(aes(y = ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -88,11 +83,6 @@ gridExtra::grid.arrange(data_one_min %>%
                           filter_index("2018-07-28 20:00"~"2018-07-29 20:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
                           geom_line(aes(y = ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -115,11 +105,6 @@ gridExtra::grid.arrange(data_one_min %>%
                           filter_index("2018-09-07") %>%
                           ggplot(aes(time_one_min)) + 
                           geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -134,11 +119,6 @@ gridExtra::grid.arrange(data_one_min %>%
                           filter_index("2018-09-07 10:00"~"2018-09-07 23:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
                           geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -165,11 +145,6 @@ gridExtra::grid.arrange(data_one_min %>%
                           filter_index("2019-08-27 13:00"~"2019-08-28 04:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
                           geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -196,11 +171,6 @@ gridExtra::grid.arrange(data_five_min %>%
                           filter_index("2020-06-19 08:00"~"2020-06-19 23:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
                           geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
                           theme(legend.position="none")
 )
 
@@ -221,12 +191,7 @@ gridExtra::grid.arrange(data_one_min %>%
                         data_fifteen_min %>% 
                           filter_index("2020-08-18 11:00"~"2020-08-18 23:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
+                          geom_line(aes(y =ammonium_effluent_mg_L))+
                           theme(legend.position="none")
 )
 
@@ -252,11 +217,6 @@ gridExtra::grid.arrange(data_five_min %>%
                         data_fifteen_min %>% 
                           filter_index("2021-06-20 10:00"~"2021-06-21 12:00") %>%
                           ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          geom_line(aes(y = nitrate_effluent_mg_L, 
-                                        col="Red", 
-                                        alpha=0.6))+
-                          geom_hline(yintercept = 2, 
-                                     col="Blue")+
+                          geom_line(aes(y =ammonium_effluent_mg_L))+
                           theme(legend.position="none")
 )

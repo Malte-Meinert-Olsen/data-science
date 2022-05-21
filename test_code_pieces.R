@@ -91,7 +91,26 @@ STL_comp <- flow %>%
   autoplot()+
   labs(x = "Hours after 2018-01-01 00:00:00")
 
+#Test on saving function
 
 
+test <- data_hour %>% 
+  filter_index("2020")
+
+test %>% autoplot(flow_effluent_m3_h)
 
 
+test_fit <- test %>% 
+  model(TSLM(flow_effluent_m3_h~ rainfall_mm+drought))
+
+test %>% autoplot(flow_effluent_m3_h) +
+  geom_line(aes(y = .fitted), col="Red",
+            data = augment(test_fit))
+
+
+saveRDS(test_fit, "test_fit.rds")
+my_model <- readRDS("test_fit.rds")
+
+test %>% autoplot(flow_effluent_m3_h) +
+  geom_line(aes(y = .fitted), col="Red",
+            data = augment(my_model))
