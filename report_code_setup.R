@@ -35,3 +35,6 @@ data_hour <- read_csv("data/data_hour.csv") %>%
   mutate(flow_effluent_m3_h=na.approx(flow_effluent_m3_h)) %>% 
   mutate(ammonium_effluent_mg_L=na.approx(ammonium_effluent_mg_L))
 
+source("report_code_finding_missing_values_for_the_drought_data.R")
+
+
