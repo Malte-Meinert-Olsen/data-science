@@ -30,7 +30,7 @@ extra_data_drought <- bind_rows(temp1,temp2,temp3) %>%
 extra_data_drought <- extra_data_drought %>% 
   #Renaming the columns
   rename(day=DateTime, 
-         drought_new="Tørkeindex") %>% 
+         drought_new="TI") %>% 
   #Converting the time column to the correct format
   mutate(day=as.Date(day)) %>% 
   #Replacing comma with dot and converting to numeric
@@ -60,5 +60,7 @@ data_thirty_min <- finding_missing_drought_data(data_thirty_min, time_thirty_min
 data_hour <- finding_missing_drought_data(data_hour, time_hour)
 
 
-
-
+rm(extra_data_drought)
+rm(temp1)
+rm(temp2)
+rm(temp3)
