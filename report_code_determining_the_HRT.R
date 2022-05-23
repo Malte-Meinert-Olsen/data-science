@@ -19,3 +19,4 @@ HRT1 <- data_one_min %>%
 
 mean(HRT1$mean_flow)
 
+quantile(HRT1$mean_flow)

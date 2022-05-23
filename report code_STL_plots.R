@@ -24,6 +24,7 @@ flow %>%
                  window="periodic"),
         robust = TRUE)) %>%
   components() %>%
+  filter_index(0~1000) %>% 
   autoplot() +
   labs(x = "Hours after 2018-01-01 00:00:00")
 
