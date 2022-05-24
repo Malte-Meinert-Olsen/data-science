@@ -5,7 +5,8 @@ source("report_code_setup.R")
 
 #Splitting data
 training_data <- data_hour %>% 
-  filter_index(~"2021")
+  filter_index(~"2021") %>% 
+  fill_gaps()
 
 
 test_data <- data_hour %>% 
