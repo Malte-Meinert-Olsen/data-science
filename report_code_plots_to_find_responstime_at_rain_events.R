@@ -72,18 +72,13 @@ gridExtra::grid.arrange(data_one_min %>%
                           theme(legend.position="none")
 )
 
-#Extra zoom on the 28th of august
+#Appendix picture
 gridExtra::grid.arrange(data_one_min %>% 
                           filter_index("2018-07-28 20:00"~"2018-07-28 21:00") %>% 
                           autoplot(rainfall_mm),
                         data_one_min %>% 
                           filter_index("2018-07-28 20:00"~"2018-07-28 22:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2018-07-28 20:00"~"2018-07-29 20:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y = ammonium_effluent_mg_L)) +
-                          theme(legend.position="none")
+                          autoplot(flow_effluent_m3_h)
 )
 
 
@@ -108,19 +103,14 @@ gridExtra::grid.arrange(data_one_min %>%
                           theme(legend.position="none")
 )
 
-#Extra zoom
+#Appendix picture
 gridExtra::grid.arrange(data_one_min %>% 
                           filter_index("2018-09-07 10:00"~"2018-09-07 14:00") %>% 
                           autoplot(rainfall_mm),
                         data_one_min %>% 
                           filter_index("2018-09-07 10:00"~"2018-09-07 14:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2018-09-07 10:00"~"2018-09-07 23:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          theme(legend.position="none")
-)
+                          autoplot(flow_effluent_m3_h)
+                        )
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -134,18 +124,13 @@ data_hour %>%
   filter_index("2019-08-27"~"2019-08-28") %>% 
   autoplot(rainfall_mm)
 
-#Extra zoom
+#Appendix picture
 gridExtra::grid.arrange(data_one_min %>% 
                           filter_index("2019-08-27 17:00"~"2019-08-27 19:00") %>% 
                           autoplot(rainfall_mm),
                         data_one_min %>% 
                           filter_index("2019-08-27 17:00"~"2019-08-27 19:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2019-08-27 13:00"~"2019-08-28 04:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          theme(legend.position="none")
+                          autoplot(flow_effluent_m3_h)
 )
 
 
@@ -161,17 +146,13 @@ data_hour %>%
   autoplot(rainfall_mm)
 
 
+#Appendix picture
 gridExtra::grid.arrange(data_five_min %>% 
                           filter_index("2020-06-19 11:00"~"2020-06-19 14:00") %>% 
                           autoplot(rainfall_mm),
                         data_five_min %>% 
                           filter_index("2020-06-19 11:00"~"2020-06-19 14:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2020-06-19 08:00"~"2020-06-19 23:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L)) +
-                          theme(legend.position="none")
+                          autoplot(flow_effluent_m3_h)
 )
 
 
@@ -181,18 +162,13 @@ data_hour %>%
   filter_index("2020-08-18") %>% 
   autoplot(rainfall_mm)
 
-#Extra zoom
+#Appendix picture
 gridExtra::grid.arrange(data_one_min %>% 
                           filter_index("2020-08-18 11:00"~"2020-08-18 14:00") %>% 
                           autoplot(rainfall_mm),
                         data_one_min %>% 
                           filter_index("2020-08-18 11:00"~"2020-08-18 14:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2020-08-18 11:00"~"2020-08-18 23:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L))+
-                          theme(legend.position="none")
+                          autoplot(flow_effluent_m3_h)
 )
 
 
@@ -207,16 +183,11 @@ data_hour %>%
   filter_index("2021-06-20") %>% 
   autoplot(rainfall_mm)
 
-#Extra zoom
+#Appendix picture
 gridExtra::grid.arrange(data_five_min %>% 
                           filter_index("2021-06-20 10:00"~"2021-06-20 13:00") %>% 
                           autoplot(rainfall_mm),
                         data_five_min %>% 
                           filter_index("2021-06-20 10:00"~"2021-06-20 13:00") %>%
-                          autoplot(flow_effluent_m3_h),
-                        data_fifteen_min %>% 
-                          filter_index("2021-06-20 10:00"~"2021-06-21 12:00") %>%
-                          ggplot(aes(time_fifteen_min)) + 
-                          geom_line(aes(y =ammonium_effluent_mg_L))+
-                          theme(legend.position="none")
+                          autoplot(flow_effluent_m3_h)
 )
